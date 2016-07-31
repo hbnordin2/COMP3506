@@ -1,0 +1,4 @@
+6 2 8 2 1 6 8 3 1 6 2 4 // Load this list of values into memory
+R1 <- 24
+R3 <- 0
+R6 <- 199
