@@ -30,13 +30,12 @@ def q3(n):
     return True
 
 #Find out m^n where n=2^x where x is an integer
-def q4(n, m):
-    if(n==0):
-        return 1
-    if(n==1):
+def q4(m,n):
+    if (n == 1):
         return m
-    x = q4(n//2, m)
-    return x*x
+    else:
+        result = powerer(m,n//2)
+        return(result * result)
 
 """
 This works by iterating through the unsorted list, and searching
