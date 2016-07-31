@@ -74,3 +74,15 @@ class Ram:
     """
     def read_from_mem(self, register_address, memory_address):
         self.regiser[register_address] = self.memory[memory_address]
+
+    """
+    Returns memory bytes from x to y
+    """
+    def get_memory(self, x, y):
+        return(self.memory[x:y])
+
+    """
+    Returns register bytes from x to y
+    """
+    def get_register(self, x, y):
+        return(self.register[x:y])
