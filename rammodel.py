@@ -25,12 +25,12 @@ def is_register(s):
 
 
 with open(sys.argv[1]) as f:
-    # load first line into memory (ignoring comments)
+    # read file to string array called lines
     lines = [l.split("//")[0] for l in f.read().splitlines()]
 
 # get the initial memory from the first line
 memory = [int(x) & 0xffffffff for x in lines[0].strip().split()]
-# remove the first line which is no longer needed and remove all comments
+# remove the first line which is no longer needed
 code = lines[1:]
 
 # this will store any branches to return to
@@ -52,14 +52,15 @@ while program_counter < len(code):
     if len(arrow_split) == 2:
         lhs = arrow_split[0].strip()
         rhs = arrow_split[1].strip()
-        # if the left hand side starts with R or r, and the right hand side is a number.
-        # then this is an instruction for rule one.
+        # if the left hand side starts is a register, and the right hand side 
+        # is a number, then this is an instruction for rule one.
         if is_register(lhs) and is_int(rhs):
             if lhs.startswith("R"):
                 register_number = int(lhs.split("R")[1])
             elif lhs.startswith("r"):
                 register_number = int(lhs.split("r")[1])
             value = int(rhs)
+            # double check that the register is in the valid range
             if 0 < register_number < 32:
                 registers[register_number] = value
                 running_time += 1
