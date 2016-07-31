@@ -6,7 +6,7 @@ def q1(n):
         return False
     return True
 
-#Find out if n mod m
+# Find n%m
 def q2(n, m):
     div = n//m
     remainder = n-div*m
@@ -18,16 +18,16 @@ that are greater than sqrt(n), the only integers that
 m>sqrt(n) can be multiplied with to equal n are less than
 sqrt(n), which have already been checked.
 """
-#Find out if n is prime
+# Find out if n is prime
 def q3(n):
     x = 2
     stopper = x*x
     while(stopper<n):
         if(q2(n, x) == 0):
-            return true
+            return False
         x += 1
         stopper = x*x
-    return false
+    return True
 
 #Find out m^n where n=2^x where x is an integer
 def q4(n, m):
