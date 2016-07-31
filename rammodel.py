@@ -2,7 +2,11 @@
 # 1. Register Value Set
 #     R1 <- 2
 #     R31 <- 2132
-
+# 3. Conditional branching
+#     label:
+#     R1 < R2 ? label
+#     R1 = R2 ? label
+#     R1 > R2 ? label
 import sys
 
 
@@ -23,6 +27,12 @@ def is_register(s):
         return False
     return is_int(reg_number)
 
+# assuming that the register starts with R or r already
+def get_register(s):
+    if s.startswith("R"):
+        return int(s.split("R")[1])
+    elif s.startswith("r"):
+        return int(s.split("r")[1])
 
 with open(sys.argv[1]) as f:
     # read file to string array called lines
@@ -49,21 +59,46 @@ running_time = 0
 while program_counter < len(code):
     line = code[program_counter]
     arrow_split = line.split("<-")
+    question_mark_split = line.split("?")
+    # all atomic operations bar conditionals use arrow
     if len(arrow_split) == 2:
         lhs = arrow_split[0].strip()
         rhs = arrow_split[1].strip()
         # if the left hand side starts is a register, and the right hand side 
         # is a number, then this is an instruction for rule one.
         if is_register(lhs) and is_int(rhs):
-            if lhs.startswith("R"):
-                register_number = int(lhs.split("R")[1])
-            elif lhs.startswith("r"):
-                register_number = int(lhs.split("r")[1])
-            value = int(rhs)
+            register_number = get_register(lhs)
+            value = int(rhs)    
             # double check that the register is in the valid range
             if 0 < register_number < 32:
                 registers[register_number] = value
                 running_time += 1
+    elif len(question_mark_split) == 2:
+        conditional = question_mark_split[0].strip()
+        branch = question_mark_split[1].strip()
+        if branch in branches:
+            if '<' in conditional:
+                operation = '<'
+            if '=' in conditional:
+                operation = '='
+            if '>' in conditional:
+                operation = '>'
+            conditional_split = conditional.split(operation)
+            lhs = conditional_split[0].strip()
+            rhs = conditional_split[1].strip()
+            if is_register(lhs) and is_register(rhs):
+                lhs_reg = get_register(lhs)
+                rhs_reg = get_register(rhs)
+                if 0 < lhs_reg < 32 and 0 < rhs_reg < 32:
+                    if operation == '<':
+                        outcome = lhs_reg < rhs_reg
+                    if operation == '=':
+                        outcome = lhs_reg == rhs_reg
+                    if operation == '>':
+                        outcome = lhs_reg > rhs_reg
+                    if outcome:
+                        program_counter = branches[branch]
+                        continue
     program_counter += 1
 
 print("Register Values: " + ' '.join(str(n) for n in registers))

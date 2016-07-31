@@ -1,4 +1,10 @@
 6 2 8 2 1 6 8 3 1 6 2 4 // Load this list of values into memory
-R1 <- 24
-R3 <- 0
-R6 <- 199
+R1 <- 24 // Put 42 in R1
+R3 <- 0 // Put 0 in R3
+R6 <- 199 // Put 199 in R6
+R1 < R6 ? test // If R1 is less than R6, jump to test
+R2 <- 40 // Put 40 in R2
+R1 > R6 ? end // If R1 is greater than R6, branch to end
+test:
+  R4 <- 41 // Put 41 in R4
+end:
