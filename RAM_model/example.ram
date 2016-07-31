@@ -1,0 +1,6 @@
+R1 <- 24 // Put 42 in R1
+R3 <- 0 // Put 0 in R3
+R6 <- 199 // Put 199 in R6
+R1 < R6 ? test // If R1 is less than R6, jump to test
+R2 <- 40 // Put 40 in R2
+R1 > R6 ? end // If R1 is greater than R6, branch to end
