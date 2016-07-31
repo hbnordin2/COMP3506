@@ -90,6 +90,7 @@ while program_counter < len(code):
                 lhs_reg = get_register(lhs)
                 rhs_reg = get_register(rhs)
                 if 0 < lhs_reg < 32 and 0 < rhs_reg < 32:
+                    running_time += 1
                     if operation == '<':
                         outcome = lhs_reg < rhs_reg
                     if operation == '=':
